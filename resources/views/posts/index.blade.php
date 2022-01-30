@@ -13,6 +13,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Title</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Posted By</th>
                     <th scope="col">Created At</th>
                     <th scope="col">Actions</th>
@@ -23,10 +24,11 @@
             <tbody>
                 @foreach ($allPosts as $post)
                 <tr>
-                    <th scope="row">1</th>
-                    <td>{{$post['title']}}</td>
-                    <td>{{$post['posted_by']}}</td>
-                    <td>{{$post['created_at']}}</td>
+                    <th scope="row">{{$post->id}}</th>
+                    <td>{{$post->title}}</td>
+                    <td>{{$post->description}}</td>
+                    <td>{{isset($post->user)?  $post->user->name:"not found"}}</td>
+                    <td>{{$post->created_at}}</td>
                     <td>
                         <a  href="/posts/{post}" class="btn btn-primary">View</a>
                         <a href="/posts/{post}/edit" class="btn btn-secondary">Edit</a>
