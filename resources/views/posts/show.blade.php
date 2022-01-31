@@ -9,8 +9,7 @@ Create
     </div>
     <div class="card-body">
         <h5 class="card-title">Title : {{$post->title}}</h5>
-        <h5 class="card-title">Description : </h5>
-        <p>{{$post->description}}</p>
+        <h5 class="card-title">Description :{{$post->description}} </h5>
         <h5 class="card-text">Created At : {{$post->created_at->format("Y-m-d")}}</h5>
 
     </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\post;
 use App\Models\User;
-
+use App\Http\Requests\StorePostRequest;
 class Postcontroller extends Controller
 {
     public function index()
@@ -28,9 +28,9 @@ class Postcontroller extends Controller
              'users'=>$Users
         ]);
     }
-    public function store()
+    public function store(StorePostRequest $request)
     {
-        $data =request()->all();
+        $data =$request->all();
         post::create([
             'title'=>$data["title"],
             'description'=>$data["description"],
@@ -52,7 +52,7 @@ class Postcontroller extends Controller
         return view('posts.update',['post'=>$onePost,'users'=>$users]);
 
     }
-    public function update($postId,Request $req){
+    public function update($postId,Request $req,StorePostRequest $request){
         $onePost=post::findOrFail($postId);
         $onePost->update([
             'title' => $req['title'],
