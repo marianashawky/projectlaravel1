@@ -28,17 +28,44 @@
                     <td>{{$post->title}}</td>
                     <td>{{$post->description}}</td>
                     <td>{{isset($post->user)?  $post->user->name:"not found"}}</td>
-                    <td>{{$post->created_at}}</td>
+                    <td>{{$post->created_at->format("Y-m-d")}}</td>
                     <td>
-                        <a  href="/posts/{post}" class="btn btn-primary">View</a>
-                        <a href="/posts/{post}/edit" class="btn btn-secondary">Edit</a>
-                   
-                        <a class="btn btn-danger">Delete</a>
-                    </td>
+                        <a  href="{{route('posts.show',['post'=>$post->id])}}" class="btn btn-primary">View</a>
+                        <a href="{{route('posts.edit',['post'=>$post->id])}}" class="btn btn-secondary">Edit</a>
+                        <form method='post' action="{{route('posts.destroy',['post'=>$post->id])}}" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" id='delete' class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
                 </tr>
                 @endforeach
 
             </tbody>
         </table>
+        <span>
+
+        {{ $allPosts->links()}}
+
+        </span>
+<style>
+.w-5{
+    display: none;
+
+}
+.text-gray-700{
+    padding: 10px;
+}
+
+</style>
+        <script>
+            const del=document.getElementById('delete');
+            del.addEventListener('click',function(e){
+                const massage=confirm("are you want Deleted !");
+                if(massage == false){
+                   e.preventDefault();
+                }
+            })
+        </script>
 
         @endsection

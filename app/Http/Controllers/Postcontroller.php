@@ -11,14 +11,13 @@ class Postcontroller extends Controller
     public function index()
     {
         $allPosts=post::all();
-        
+        $allPosts=post::paginate(3);
         return view('posts.index',[
             
             'allPosts' =>  $allPosts
         
         ]);
     
-
     }
 
     public function create()
@@ -43,24 +42,35 @@ class Postcontroller extends Controller
 
     public function show($postId)
     {
-
-        // db
-        return $postId;
+        $onePost=post::findOrFail($postId);
+        return view('posts.show',['post'=>$onePost]);
     }
-
     public function edit($postId)
-    {
+    {// db
+        $onePost=post::findOrFail($postId);
+        $users = User::all();
+        return view('posts.update',['post'=>$onePost,'users'=>$users]);
 
-        // db
-        return $postId;
+    }
+    public function update($postId,Request $req){
+        $onePost=post::findOrFail($postId);
+        $onePost->update([
+            'title' => $req['title'],
+            'description' => $req['description'],
+            'user_id' => $req['user_name'],
+        ]);
+        return redirect()->route('posts.index');
     }
 
 
-    public function destroy($postId)
-    {
 
-        // db
-        return $postId;
+
+
+    public function destroy($postId,Request $req)
+    {
+        $onePost=post::findOrFail($postId);
+        $onePost->delete();
+        return redirect()->route('posts.index');
     }
 
 
