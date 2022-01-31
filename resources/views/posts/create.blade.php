@@ -22,7 +22,7 @@
         <select class="form-control"  name="post_creator">
 
             @foreach ($users as $user)
-            <option value="{{encrypt($user->id)}}">{{$user->name}}</option>
+            <option value="{{$user->id}}">{{$user->name}}</option>
             @endforeach
 
         </select>

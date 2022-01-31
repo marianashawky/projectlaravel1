@@ -35,14 +35,18 @@ class Postcontroller extends Controller
             'title'=>$data["title"],
             'description'=>$data["description"],
             'user_id'=>$data["post_creator"]
+        
         ]);
         // db
         return redirect()->route('posts.index');
     }
 
-    public function show($postId)
+    public function show($slug)
     {
-        $onePost=post::findOrFail($postId);
+
+        $onePost = Post::where('slug', $slug)->get();
+   //  dd($onePost);
+      //  $onePost=post::findOrFail($postId);
         return view('posts.show',['post'=>$onePost]);
     }
     public function edit($postId)
