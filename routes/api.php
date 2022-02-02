@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/posts',[Postcontroller::class,'index'])->name('api.posts.index');
-Route::get('/posts/{post}',[Postcontroller::class,'show']);
-Route::post('/posts',[Postcontroller::class,'store']);
+Route::get('/posts',[Postcontroller::class,'index'])->name('api.posts.index')->middleware('auth:sanctum');
+Route::get('/posts/{post}',[Postcontroller::class,'show'])->middleware('auth:sanctum');
+Route::post('/posts',[Postcontroller::class,'store'])->middleware('auth:sanctum');
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
