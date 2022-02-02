@@ -26,17 +26,17 @@ Route::delete('/posts/{post}',[Postcontroller::class,'destroy'])->name('posts.de
 
 Auth::routes();
 Route::get('/auth/redirect', function () {
-    return Socialite::driver('github')->redirect();
+    return Socialite::driver('github')->stateless()->redirect();
 })->name('auth.github');
 
 
 Route::get('/auth2/redirect', function () {
-    return Socialite::driver('google')->redirect();
+    return Socialite::driver('google')->stateless()->redirect();
 })->name('auth.google');
 
 
 Route::get('/auth/callback', function () {
-    $githubUser = Socialite::driver('github')->user();
+    $githubUser = Socialite::driver('github')->stateless()->user();
     $user = User::where('github_id', $githubUser->id)->first();
     if ($user) {
         $user->update([
@@ -60,7 +60,7 @@ Route::get('/auth/callback', function () {
 });
 
 Route::get('/auth2/callback', function () {
-    $googleUser = Socialite::driver('google')->user();
+    $googleUser = Socialite::driver('google')->stateless()->user();
     $user = User::where('google_id', $googleUser->id)->first();
     if ($user) {
         $user->update([
